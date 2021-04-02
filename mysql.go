@@ -27,5 +27,14 @@ func MySQLConnect(dbUrlEnv string, dbSchemaEnv string, dbUsernameEnv string, dbP
 
 	log.Debug("Connection to database " + dbUrl + " completed")
 
+	_ddb, err := _db.DB()
+
+	if err != nil {
+		panic("Setting connection pool failed")
+	}
+
+	_ddb.SetMaxIdleConns(10)
+	_ddb.SetMaxOpenConns(50)
+
 	return _db
 }
