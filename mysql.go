@@ -1,9 +1,9 @@
 package gorm_db_env_connector
 
 import (
-	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
+	"log"
 )
 
 type MySqlParams struct {
@@ -37,7 +37,7 @@ func (env *MySqlEnv) resolve() MySqlParams {
 
 func mySQLConnect(mysqlParams MySqlParams) *gorm.DB {
 
-	log.Debug("Initializing connection to database " + mysqlParams.DbUrl)
+	log.Println("Initializing connection to database " + mysqlParams.DbUrl)
 
 	dsn := mysqlParams.DbUsername + ":" + mysqlParams.DbPassword + "@tcp(" + mysqlParams.DbUrl + ")/" + mysqlParams.DbSchema + "?parseTime=true"
 
@@ -48,7 +48,7 @@ func mySQLConnect(mysqlParams MySqlParams) *gorm.DB {
 		panic("Connection to database failed")
 	}
 
-	log.Debug("Connection to database " + mysqlParams.DbUrl + " completed")
+	log.Println("Connection to database " + mysqlParams.DbUrl + " completed")
 
 	_ddb, err := _db.DB()
 
