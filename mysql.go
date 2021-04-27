@@ -4,28 +4,51 @@ import (
 	log "github.com/sirupsen/logrus"
 	"gorm.io/driver/mysql"
 	"gorm.io/gorm"
-	"os"
 )
 
-func MySQLConnect(dbUrlEnv string, dbSchemaEnv string, dbUsernameEnv string, dbPasswordEnv string) *gorm.DB {
+type MySqlParams struct {
+	DbUrl      string
+	DbSchema   string
+	DbUsername string
+	DbPassword string
+}
 
-	dbUrl := os.Getenv(dbUrlEnv)
-	dbSchema := os.Getenv(dbSchemaEnv)
-	dbUsername := os.Getenv(dbUsernameEnv)
-	dbPassword := os.Getenv(dbPasswordEnv)
+type MySqlEnv struct {
+	DbUrlEnvVar       string
+	DbSchemaEnvVar    string
+	DbUsernameEnvVar  string
+	DbPasswordEnvVar  string
+	DbUrlDefault      string
+	DbSchemaDefault   string
+	DbUsernameDefault string
+	DbPasswordDefault string
+}
 
-	log.Debug("Initializing connection to database " + dbUrl)
+func (env *MySqlEnv) resolve() MySqlParams {
 
-	dsn := dbUsername + ":" + dbPassword + "@tcp(" + dbUrl + ")/" + dbSchema + "?parseTime=true"
+	return MySqlParams{
+		DbUrl:      resolveEnvOrDefault(env.DbUrlEnvVar, env.DbUrlDefault),
+		DbSchema:   resolveEnvOrDefault(env.DbSchemaEnvVar, env.DbSchemaDefault),
+		DbUsername: resolveEnvOrDefault(env.DbUsernameEnvVar, env.DbUsernameDefault),
+		DbPassword: resolveEnvOrDefault(env.DbPasswordEnvVar, env.DbPasswordDefault),
+	}
+	
+}
+
+func mySQLConnect(mysqlParams MySqlParams) *gorm.DB {
+
+	log.Debug("Initializing connection to database " + mysqlParams.DbUrl)
+
+	dsn := mysqlParams.DbUsername + ":" + mysqlParams.DbPassword + "@tcp(" + mysqlParams.DbUrl + ")/" + mysqlParams.DbSchema + "?parseTime=true"
 
 	_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Fatal("Connection to database " + dbUrl + " failed")
+		log.Fatal("Connection to database " + mysqlParams.DbUrl + " failed")
 		panic("Connection to database failed")
 	}
 
-	log.Debug("Connection to database " + dbUrl + " completed")
+	log.Debug("Connection to database " + mysqlParams.DbUrl + " completed")
 
 	_ddb, err := _db.DB()
 
@@ -37,4 +60,8 @@ func MySQLConnect(dbUrlEnv string, dbSchemaEnv string, dbUsernameEnv string, dbP
 	_ddb.SetMaxOpenConns(50)
 
 	return _db
+}
+
+func MySQLConnect(mysqlEnv MySqlEnv) *gorm.DB {
+	return mySQLConnect(mysqlEnv.resolve())
 }
