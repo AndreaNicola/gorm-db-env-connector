@@ -35,7 +35,7 @@ func (env *MySqlEnv) resolve() MySqlParams {
 	
 }
 
-func mySQLConnect(mysqlParams MySqlParams) *gorm.DB {
+func MySQLConnect(mysqlParams MySqlParams) *gorm.DB {
 
 	log.Println("Initializing connection to database " + mysqlParams.DbUrl)
 
@@ -62,6 +62,6 @@ func mySQLConnect(mysqlParams MySqlParams) *gorm.DB {
 	return _db
 }
 
-func MySQLConnect(mysqlEnv MySqlEnv) *gorm.DB {
-	return mySQLConnect(mysqlEnv.resolve())
+func MySQLConnectEnv(mysqlEnv MySqlEnv) *gorm.DB {
+	return MySQLConnect(mysqlEnv.resolve())
 }
