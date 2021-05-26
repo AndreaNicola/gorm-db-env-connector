@@ -4,6 +4,7 @@ This module implements a stupid wrapper over gorm database connection. The goal 
 
 Actually i wrapped those databases:
 - mysql
+- postgresql
 
 ## Examples
 
@@ -57,6 +58,7 @@ Questo modulo fornisce un wrapper sopra il connettore di Gorm che consente di no
 
 Attualmente sono supportati i seguenti database:
 - mysql
+- postgresql
 
 ## Esempio di utilizzo
 
