@@ -1,6 +1,10 @@
 package gorm_db_env_connector
 
-import "os"
+import (
+	"gorm.io/gorm"
+	"os"
+	"time"
+)
 
 func resolveEnvOrDefault(envVar string, defaultValue string) string {
 
@@ -10,4 +14,11 @@ func resolveEnvOrDefault(envVar string, defaultValue string) string {
 	}
 	return res
 
+}
+
+type StringModel struct {
+	ID        string         `gorm:"primarykey;size:36" json:"id,omitempty"`
+	CreatedAt time.Time      `json:"created_at"`
+	UpdatedAt time.Time      `json:"updated_at"`
+	DeletedAt gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
