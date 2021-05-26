@@ -45,7 +45,6 @@ func MySQLConnect(mysqlParams MySqlParams) *gorm.DB {
 
 	if err != nil {
 		log.Fatal("Connection to database " + mysqlParams.DbUrl + " failed")
-		panic("Connection to database failed")
 	}
 
 	log.Println("Connection to database " + mysqlParams.DbUrl + " completed")
