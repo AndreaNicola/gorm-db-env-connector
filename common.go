@@ -38,3 +38,12 @@ type Error struct {
 func (e Error) Error() string {
 	return e.Message
 }
+
+type Page struct {
+	TotalElements int
+	PageElements int
+	Results []interface{}
+	PageNumber int
+	PageSize int
+	TotalPages int
+}
