@@ -22,3 +22,10 @@ type StringModel struct {
 	UpdatedAt time.Time      `json:"updated_at"`
 	DeletedAt gorm.DeletedAt `gorm:"index" json:"deleted_at"`
 }
+
+func Paginate(page int, size int) func(db *gorm.DB) *gorm.DB {
+	return func(db *gorm.DB) *gorm.DB {
+		offset := page * size
+		return db.Offset(offset).Limit(size)
+	}
+}
