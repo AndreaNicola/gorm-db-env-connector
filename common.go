@@ -41,15 +41,15 @@ func (e Error) Error() string {
 }
 
 type Page struct {
-	TotalElements int
-	PageElements int
-	Results []interface{}
-	PageNumber int
-	PageSize int
-	TotalPages int
+	TotalElements int64
+	PageElements  int
+	Results       []interface{}
+	PageNumber    int
+	PageSize      int
+	TotalPages    int
 }
 
-func (p *Page) New(pageNumber, pageSize, totalElements int, results []interface{}) {
+func (p *Page) New(pageNumber, pageSize int, totalElements int64, results []interface{}) {
 	p.PageNumber = pageNumber
 	p.PageSize = pageSize
 	p.TotalElements = totalElements
