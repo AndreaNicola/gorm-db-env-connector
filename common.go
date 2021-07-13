@@ -2,6 +2,7 @@ package gorm_db_env_connector
 
 import (
 	"gorm.io/gorm"
+	"math"
 	"os"
 	"time"
 )
@@ -46,4 +47,13 @@ type Page struct {
 	PageNumber int
 	PageSize int
 	TotalPages int
+}
+
+func (p *Page) New(pageNumber, pageSize, totalElements int, results []interface{}) {
+	p.PageNumber = pageNumber
+	p.PageSize = pageSize
+	p.TotalElements = totalElements
+	p.Results = results
+	p.PageElements = len(results)
+	p.TotalPages = int(math.Ceil(float64(totalElements) / float64(pageSize)))
 }
