@@ -29,3 +29,8 @@ func Paginate(page int, size int) func(db *gorm.DB) *gorm.DB {
 		return db.Offset(offset).Limit(size)
 	}
 }
+
+type Error struct {
+	Code int
+	Message string
+}
