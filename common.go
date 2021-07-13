@@ -31,6 +31,10 @@ func Paginate(page int, size int) func(db *gorm.DB) *gorm.DB {
 }
 
 type Error struct {
-	Code int
+	Code    int
 	Message string
+}
+
+func (e *Error) Error() string {
+	return e.Message
 }
