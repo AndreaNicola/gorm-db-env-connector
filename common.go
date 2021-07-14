@@ -32,8 +32,8 @@ func Paginate(page int, size int) func(db *gorm.DB) *gorm.DB {
 }
 
 type Error struct {
-	Code    int
-	Message string
+	Code    int    `json:"code,omitempty"`
+	Message string `json:"message,omitempty"`
 }
 
 func (e Error) Error() string {
@@ -41,12 +41,12 @@ func (e Error) Error() string {
 }
 
 type Page struct {
-	TotalElements int64
-	PageElements  int
-	Results       []interface{}
-	PageNumber    int
-	PageSize      int
-	TotalPages    int
+	TotalElements int64         `json:"total_elements,omitempty"`
+	PageElements  int           `json:"page_elements,omitempty"`
+	Results       []interface{} `json:"results,omitempty"`
+	PageNumber    int           `json:"page_number,omitempty"`
+	PageSize      int           `json:"page_size,omitempty"`
+	TotalPages    int           `json:"total_pages,omitempty"`
 }
 
 func (p *Page) New(pageNumber, pageSize int, totalElements int64, results []interface{}) {
