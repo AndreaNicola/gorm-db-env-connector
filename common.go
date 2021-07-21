@@ -41,12 +41,12 @@ func (e Error) Error() string {
 }
 
 type Page struct {
-	TotalElements int64         `json:"total_elements,omitempty"`
-	PageElements  int           `json:"page_elements,omitempty"`
-	Results       []interface{} `json:"results,omitempty"`
-	PageNumber    int           `json:"page_number,omitempty"`
-	PageSize      int           `json:"page_size,omitempty"`
-	TotalPages    int           `json:"total_pages,omitempty"`
+	TotalElements int64         `json:"total_elements"`
+	PageElements  int           `json:"page_elements"`
+	Results       []interface{} `json:"results"`
+	PageNumber    int           `json:"page_number"`
+	PageSize      int           `json:"page_size"`
+	TotalPages    int           `json:"total_pages"`
 }
 
 func (p *Page) New(pageNumber, pageSize int, totalElements int64, results []interface{}) {
