@@ -37,17 +37,19 @@ func (env *MySqlEnv) resolve() MySqlParams {
 
 func MySQLConnect(mysqlParams MySqlParams) *gorm.DB {
 
-	log.Println("Initializing connection to database " + mysqlParams.DbUrl)
+	databaseName :=  mysqlParams.DbUrl + "/"+ mysqlParams.DbSchema
+
+	log.Println("Initializing connection to database " + databaseName)
 
 	dsn := mysqlParams.DbUsername + ":" + mysqlParams.DbPassword + "@tcp(" + mysqlParams.DbUrl + ")/" + mysqlParams.DbSchema + "?parseTime=true"
 
 	_db, err := gorm.Open(mysql.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Fatal("Connection to database " + mysqlParams.DbUrl + " failed")
+		log.Fatal("Connection to database " + databaseName + " failed")
 	}
 
-	log.Println("Connection to database " + mysqlParams.DbUrl + " completed")
+	log.Println("Connection to database " + databaseName + " completed")
 
 	_ddb, err := _db.DB()
 

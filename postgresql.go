@@ -49,16 +49,18 @@ func PgConnectEnv(env PgEnv) *gorm.DB {
 
 func PgConnect(pgParams PgParams) *gorm.DB {
 
-	log.Println("Initializing connection to database " + pgParams.Url)
+	databaseName := pgParams.Url+ "/" + pgParams.Database
+
+	log.Println("Initializing connection to database " + databaseName)
 	dsn := "host=" + pgParams.Url + " user=" + pgParams.Username + " password=" + pgParams.Password + " dbname=" + pgParams.Database + " port=" + pgParams.Port + " sslmode=" + pgParams.SSLMode
 
 	_db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
-		log.Fatal("Connection to database " + pgParams.Url + " failed")
+		log.Fatal("Connection to database " + databaseName + " failed")
 	}
 
-	log.Println("Connection to database " + pgParams.Url + " completed")
+	log.Println("Connection to database " + databaseName + " completed")
 
 	_ddb, err := _db.DB()
 
