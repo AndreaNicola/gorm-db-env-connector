@@ -18,5 +18,6 @@ require (
 	golang.org/x/text v0.3.6 // indirect
 	gorm.io/driver/mysql v1.1.1
 	gorm.io/driver/postgres v1.1.0
-	gorm.io/gorm v1.21.12
+	gorm.io/driver/sqlite v1.1.5 // indirect
+	gorm.io/gorm v1.21.15
 )
